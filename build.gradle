@@ -9,6 +9,10 @@ description = 'Triple Diff Streams'
 version = 'master-SNAPSHOT'
 group = 'com.github.zourzouvillys'
 
+sourceCompatibility = 8
+targetCompatibility = 8
+
+
 repositories {
   mavenCentral()
   jcenter()

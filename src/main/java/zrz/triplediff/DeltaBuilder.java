@@ -27,16 +27,33 @@ import zrz.triplediff.protobuf.TripleDiffProto.TupleList;
 
 public class DeltaBuilder implements DeltaStream {
 
-  private Builder d;
+  private Delta.Builder d;
   private Map<Term, SubjectDeltaBuilder> currentContext = new HashMap<>();
 
   public DeltaBuilder() {
     this.d = Delta.newBuilder();
   }
 
+  /**
+   * creates the delta and resets internal state. this instance may be reused.
+   */
+
   public Delta build() {
     flush();
-    return d.build();
+    Delta res = d.build();
+    this.clear();
+    return res;
+  }
+
+  /**
+   * resets internal state. may be reused.
+   */
+
+  public void clear() {
+    d.clearDiffs();
+    d.clearId();
+    d.clearParent();
+    this.currentContext.clear();
   }
 
   @Override
@@ -139,7 +156,7 @@ public class DeltaBuilder implements DeltaStream {
 
       if (this.pending.size() == 1 && pending.get(0).getObjectsCount() == 1) {
         TupleList.Builder t = this.pending.remove(0);
-        Triple.Builder tb = row.getTripleBuilder()
+        Triple.Builder tb = Triple.newBuilder()
             .setSubject(subject)
             .setPredicate(t.getPredicate())
             .setObject(t.getObjectsList().get(0));
@@ -148,7 +165,7 @@ public class DeltaBuilder implements DeltaStream {
       else if (!this.pending.isEmpty()) {
         SubjectList.Builder slb = SubjectList.newBuilder();
         slb.setSubject(subject);
-        this.pending.stream().map(e -> e.build()).forEach(tl -> slb.addValues(tl));
+        this.pending.stream().forEach(tl -> slb.addValues(tl));
         row.setSubjectList(slb);
       }
 
