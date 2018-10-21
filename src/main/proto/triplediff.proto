@@ -1,0 +1,113 @@
+syntax = "proto3";
+
+package zrz.triplediff.protobuf;
+
+option java_package = "zrz.triplediff.protobuf";
+option java_outer_classname = "TripleDiffProto";
+option java_multiple_files = false;
+
+/**
+ * an IRI value. message instead of scalar to allow extensions.
+ */
+
+message IRI {
+  string iriString = 1;
+}
+
+message PrefixName {
+  string prefix = 1;
+  string localName = 2;
+}
+
+
+message BNode {
+  string label = 1;
+}
+
+message Literal {
+  // form depends on the data type.
+  bytes lexical_form = 1;
+  string data_type = 2;
+}
+
+message Variable {
+  string name = 1;
+}
+
+message Any {
+}
+
+message Undefined {
+}
+
+
+message Term {
+  oneof value {
+    BNode blank_node = 1;
+    IRI iri = 2;
+    Literal literal = 3;
+    PrefixName prefixName = 4;
+    Variable var = 5;
+    Any any = 6;
+    Undefined undefined = 7;
+    //
+    string stringLiteral = 8;
+    int64 integerLiteral = 9;
+    double doubleLiteral = 10;
+    bool booleanLiteral = 11;
+  }
+}
+
+/**
+ * a single triple.
+ */
+
+message Triple {
+  Term subject = 1;
+  Term predicate = 2;
+  Term object = 3;
+}
+
+message PrefixDecl {
+  string prefix = 1;
+  string iri = 2;
+}
+
+/** 
+ *
+ */
+ 
+message Row {
+  oneof value {
+    // allows smaller streams when lots of IRIs included.
+    PrefixDecl prefix = 1;
+    Triple triple = 2;
+    SubjectList subjectList = 3;
+  }
+}
+
+message TupleList {
+  Term predicate = 1;
+  repeated Term objects = 2;
+}
+
+message SubjectList {
+  Term subject = 1;
+  repeated TupleList values = 2;
+}
+
+ 
+message Diff {
+  oneof value {
+    Row add = 1;
+    Row delete = 2;
+  }
+}
+
+message Delta {
+  string id = 1;
+  string parent = 2;
+  repeated Diff diffs = 3;
+}
+
+

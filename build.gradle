@@ -1,0 +1,107 @@
+
+plugins {
+  id "java-library"
+  id "com.google.protobuf" version "0.8.6"
+  id "maven"
+}
+
+description = 'Triple Diff Streams'
+version = 'master-SNAPSHOT'
+group = 'com.github.zourzouvillys'
+
+repositories {
+  mavenCentral()
+  jcenter()
+}
+
+def protobufVersion = '3.6.1'
+
+  
+dependencies {
+  implementation      "com.google.protobuf:protobuf-java:${protobufVersion}"
+  compileOnly         'org.eclipse.jdt:org.eclipse.jdt.annotation:2.1.150'
+  testImplementation  'junit:junit:4.12'
+  testImplementation  'org.assertj:assertj-core:3.6.1'
+}
+
+protobuf {
+  protoc {
+    artifact = "com.google.protobuf:protoc:${protobufVersion}"
+  }
+}
+
+
+jar {
+  manifest {
+    attributes ('Automatic-Module-Name': "zrz.triples.diff")
+  }
+}      
+
+
+sourceSets {
+    main {
+        proto {
+            srcDir 'src/main/proto'
+        }
+        java {
+            srcDirs 'src/main/java', 'build/generated/source/proto/main/java'            
+        }
+    }
+}
+
+
+
+// --------------------------------------------------
+// install
+// --------------------------------------------------
+
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+  classifier = 'sources'
+  from sourceSets.main.allSource
+}
+
+tasks.withType(Javadoc) {
+  options.addStringOption('Xdoclint:none', '-quiet')
+}
+    
+task javadocJar(type: Jar, dependsOn: javadoc) {
+  classifier = 'javadoc'
+  from javadoc.destinationDir
+}
+
+javadoc {
+  options.addBooleanOption('html5', true)
+}  
+
+artifacts {
+  archives jar
+  archives sourcesJar
+  archives javadocJar
+}
+
+javadoc {
+  title = "TripleDiff"
+  failOnError = false
+}
+
+install {
+  repositories.mavenInstaller {
+    pom.project {
+      licenses {
+        license {
+          name 'The Apache Software License, Version 2.0'
+          url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+          distribution 'repo'
+        }
+      }
+    }
+  }
+}
+
+task wrapper(type: Wrapper) {
+  gradleVersion = '4.8'
+}
+
+
+
