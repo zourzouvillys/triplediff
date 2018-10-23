@@ -1,18 +1,14 @@
 package zrz.triplediff;
 
-import zrz.triplediff.protobuf.TripleDiffProto.IRI;
-import zrz.triplediff.protobuf.TripleDiffProto.Literal;
-
 import java.nio.charset.StandardCharsets;
 
 import com.google.protobuf.ByteString;
 
 import zrz.triplediff.protobuf.TripleDiffProto.Any;
-import zrz.triplediff.protobuf.TripleDiffProto.BNode;
+import zrz.triplediff.protobuf.TripleDiffProto.Literal;
 import zrz.triplediff.protobuf.TripleDiffProto.PrefixName;
 import zrz.triplediff.protobuf.TripleDiffProto.Term;
 import zrz.triplediff.protobuf.TripleDiffProto.Undefined;
-import zrz.triplediff.protobuf.TripleDiffProto.Variable;
 
 public class DeltaTerms {
 
@@ -20,15 +16,15 @@ public class DeltaTerms {
   private static final Term ANY_TERM = Term.newBuilder().setAny(Any.getDefaultInstance()).build();
 
   public static Term iri(String iriString) {
-    return Term.newBuilder().setIri(IRI.newBuilder().setIriString(iriString)).build();
+    return Term.newBuilder().setIri(iriString).build();
   }
 
   public static Term blankNode(String label) {
-    return Term.newBuilder().setBlankNode(BNode.newBuilder().setLabel(label)).build();
+    return Term.newBuilder().setBlankNode(label).build();
   }
 
   public static Term var(String label) {
-    return Term.newBuilder().setVar(Variable.newBuilder().setName(label).build()).build();
+    return Term.newBuilder().setVariable(label).build();
   }
 
   public static Term undefined() {
@@ -40,7 +36,7 @@ public class DeltaTerms {
   }
 
   public static Term prefixedName(String prefix, String localName) {
-    return Term.newBuilder().setPrefixName(PrefixName.newBuilder().setPrefix(prefix).setLocalName(localName).build()).build();
+    return Term.newBuilder().setPrefixedName(PrefixName.newBuilder().setPrefix(prefix).setLocalName(localName).build()).build();
   }
 
   public static Term literal(String lexicalForm, String dataType) {

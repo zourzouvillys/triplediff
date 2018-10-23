@@ -8,22 +8,9 @@ option java_package = "zrz.triplediff.protobuf";
 option java_outer_classname = "TripleDiffProto";
 option java_multiple_files = false;
 
-/**
- * an IRI value. message instead of scalar to allow extensions.
- */
-
-message IRI {
-  string iriString = 1;
-}
-
 message PrefixName {
   string prefix = 1;
   string localName = 2;
-}
-
-
-message BNode {
-  string label = 1;
 }
 
 message Literal {
@@ -32,9 +19,6 @@ message Literal {
   string data_type = 2;
 }
 
-message Variable {
-  string name = 1;
-}
 
 message Any {
 }
@@ -45,11 +29,11 @@ message Undefined {
 
 message Term {
   oneof value {
-    BNode blank_node = 1;
-    IRI iri = 2;
+    string blank_node = 1;
+    string iri = 2;
     Literal literal = 3;
-    PrefixName prefixName = 4;
-    Variable var = 5;
+    PrefixName prefixed_name = 4;
+    string variable = 5;
     Any any = 6;
     Undefined undefined = 7;
     //
@@ -111,5 +95,4 @@ message Delta {
   string parent = 2;
   repeated Diff diffs = 3;
 }
-
 
