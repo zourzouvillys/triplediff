@@ -123,6 +123,24 @@ message TriplePath {
 }
 
 /**
+ *
+ */
+ 
+message GraphPattern {
+  repeated TriplePath triples = 1;
+}
+
+/**
+ *
+ */
+
+message GraphOperation {
+  oneof op {
+    GraphPattern graphPattern = 1;
+  }
+}
+
+/**
  * a list of path components
  */
 
