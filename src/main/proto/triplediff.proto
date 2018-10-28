@@ -1,6 +1,4 @@
 syntax = "proto3";
-
-import "google/protobuf/wrappers.proto";
  
 package triplediff.v1;
 
@@ -149,6 +147,10 @@ message BinaryPath {
   Path right = 2;
 }
 
+message PathLength {
+  int32 value = 1;
+}
+
 /**
  * a single path component.
  */
@@ -169,10 +171,10 @@ message Path {
   }
   
   // min duplication of path length needed to match. 0 means it is optional. if not specified, defaults to exactly once.
-  google.protobuf.UInt32Value minRepeat = 100;
+  PathLength minRepeat = 100;
   
   // max duplication of path length. must be >= 1. default is 1.
-  google.protobuf.UInt32Value maxRepeat = 101;
+  PathLength maxRepeat = 101;
   
   // swap the direction of the path.
   bool is_inverse = 102;
