@@ -4,13 +4,16 @@ import java.util.function.Consumer;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 
-import zrz.triplediff.protobuf.TripleDiffProto.Delta;
-import zrz.triplediff.protobuf.TripleDiffProto.Diff;
-import zrz.triplediff.protobuf.TripleDiffProto.Row;
-import zrz.triplediff.protobuf.TripleDiffProto.SubjectList;
-import zrz.triplediff.protobuf.TripleDiffProto.Triple;
-import zrz.triplediff.protobuf.TripleDiffProto.TupleList;
-
+import triplediff.protobuf.TripleDiffProto.Delta;
+import triplediff.protobuf.TripleDiffProto.Delta.Builder;
+import triplediff.protobuf.TripleDiffProto.Diff;
+import triplediff.protobuf.TripleDiffProto.Diff.ValueCase;
+import triplediff.protobuf.TripleDiffProto.PrefixDecl;
+import triplediff.protobuf.TripleDiffProto.Row;
+import triplediff.protobuf.TripleDiffProto.SubjectList;
+import triplediff.protobuf.TripleDiffProto.Term;
+import triplediff.protobuf.TripleDiffProto.Triple;
+import triplediff.protobuf.TripleDiffProto.TupleList;
 /**
  * given a incoming binary diff, applies to the specified stream.
  * 

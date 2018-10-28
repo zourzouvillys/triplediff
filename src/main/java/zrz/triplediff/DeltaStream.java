@@ -1,6 +1,6 @@
 package zrz.triplediff;
 
-import zrz.triplediff.protobuf.TripleDiffProto.Term;
+import triplediff.protobuf.TripleDiffProto.Term;
 
 /**
  * API for receiving a stream of changes to a triplestore.

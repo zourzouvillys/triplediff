@@ -3,6 +3,7 @@ plugins {
   id "java-library"
   id "com.google.protobuf" version "0.8.6"
   id "maven"
+  id "eclipse"
 }
 
 description = 'Triple Diff Streams'
@@ -48,7 +49,8 @@ sourceSets {
             srcDir 'src/main/proto'
         }
         java {
-            srcDirs 'src/main/java', 'build/generated/source/proto/main/java'            
+            srcDirs 'src/main/java'     
+            srcDirs "build/generated/source/proto/main/java"       
         }
     }
 }
@@ -103,9 +105,22 @@ install {
   }
 }
 
-wrapper {
-  gradleVersion = '4.8'
+////
+
+eclipse {
+  project.natures 'org.eclipse.buildship.core.gradleprojectnature'
+  classpath {
+    file {
+      whenMerged {
+        entries.findAll { isModule(it) }.each {  it.entryAttributes['module'] = 'true' }
+        entries.findAll { isSource(it) && isTestScope(it) }.each { it.entryAttributes['test'] = 'true' }
+        entries.findAll { isLibrary(it) && isTestScope(it) }.each { it.entryAttributes['test'] = 'true' }
+      }
+    }
+  }
 }
 
-
-
+boolean isLibrary(entry) { return entry.properties.kind.equals('lib') }
+boolean isTestScope(entry) { return entry.entryAttributes.get('gradle_used_by_scope').equals('test'); }
+boolean isModule(entry) { isLibrary(entry) && !isTestScope(entry); }
+boolean isSource(entry) { return entry.properties.kind.equals('src'); }

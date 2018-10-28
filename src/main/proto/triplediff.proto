@@ -1,10 +1,11 @@
 syntax = "proto3";
 
-
-package zrz.triplediff.protobuf;
+import "google/protobuf/wrappers.proto";
+ 
+package triplediff.protobuf;
 
 option optimize_for = SPEED;
-option java_package = "zrz.triplediff.protobuf";
+option java_package = "triplediff.protobuf";
 option java_outer_classname = "TripleDiffProto";
 option java_multiple_files = false;
 
@@ -33,14 +34,24 @@ message Term {
     string iri = 2;
     Literal literal = 3;
     PrefixName prefixed_name = 4;
-    string variable = 5;
-    Any any = 6;
-    Undefined undefined = 7;
-    //
+    // the inlined literal native types.
     string stringLiteral = 8;
     int64 integerLiteral = 9;
     double doubleLiteral = 10;
     bool booleanLiteral = 11;
+  }
+}
+
+/**
+ * a term pattern
+ */
+ 
+message TermPattern {
+  oneof value {
+    Term term = 1;
+    string variable = 2;
+    Any any = 3;
+    Undefined undefined = 4;
   }
 }
 
@@ -96,3 +107,61 @@ message Delta {
   repeated Diff diffs = 3;
 }
 
+/**
+ * a triple path 
+ */
+ 
+message TriplePath {
+  TermPattern subject = 1;
+  TermPattern object = 2;
+  oneof predicate {
+    TermPattern predicatePattern = 3;
+    Path predicatePath = 4;
+    string predicateVariable = 5;
+    Any predicateAny = 6;
+  }
+}
+
+/**
+ * a list of path components
+ */
+
+message BinaryPath {
+  Path left = 1;
+  Path right = 2;
+}
+
+/**
+ * a single path component.
+ */
+
+message Path {
+  
+  oneof element {
+  
+    // a direct element.
+    Term link = 1;
+    
+    // A or B
+    BinaryPath alternate = 3;
+    
+    // A then B
+    BinaryPath sequence = 4;
+    
+  }
+  
+  // min duplication of path length needed to match. 0 means it is optional. if not specified, defaults to exactly once.
+  google.protobuf.UInt32Value minRepeat = 100;
+  
+  // max duplication of path length. must be >= 1. default is 1.
+  google.protobuf.UInt32Value maxRepeat = 101;
+  
+  // swap the direction of the path.
+  bool is_inverse = 102;
+  
+  // only patchs not matching this will match.
+  bool is_negated = 103;
+  
+} 
+ 
+ 

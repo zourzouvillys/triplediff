@@ -2,7 +2,7 @@ package zrz.triplediff;
 
 import java.util.stream.Stream;
 
-import zrz.triplediff.protobuf.TripleDiffProto.Term;
+import triplediff.protobuf.TripleDiffProto.Term;
 
 public interface SubjectDeltaStream {
 

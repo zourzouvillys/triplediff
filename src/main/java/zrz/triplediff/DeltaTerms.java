@@ -4,16 +4,13 @@ import java.nio.charset.StandardCharsets;
 
 import com.google.protobuf.ByteString;
 
-import zrz.triplediff.protobuf.TripleDiffProto.Any;
-import zrz.triplediff.protobuf.TripleDiffProto.Literal;
-import zrz.triplediff.protobuf.TripleDiffProto.PrefixName;
-import zrz.triplediff.protobuf.TripleDiffProto.Term;
-import zrz.triplediff.protobuf.TripleDiffProto.Undefined;
+import triplediff.protobuf.TripleDiffProto.Any;
+import triplediff.protobuf.TripleDiffProto.Literal;
+import triplediff.protobuf.TripleDiffProto.PrefixName;
+import triplediff.protobuf.TripleDiffProto.Term;
+import triplediff.protobuf.TripleDiffProto.Undefined;
 
 public class DeltaTerms {
-
-  private static final Term UNDEFINED_TERM = Term.newBuilder().setUndefined(Undefined.getDefaultInstance()).build();
-  private static final Term ANY_TERM = Term.newBuilder().setAny(Any.getDefaultInstance()).build();
 
   public static Term iri(String iriString) {
     return Term.newBuilder().setIri(iriString).build();
@@ -21,18 +18,6 @@ public class DeltaTerms {
 
   public static Term blankNode(String label) {
     return Term.newBuilder().setBlankNode(label).build();
-  }
-
-  public static Term var(String label) {
-    return Term.newBuilder().setVariable(label).build();
-  }
-
-  public static Term undefined() {
-    return UNDEFINED_TERM;
-  }
-
-  public static Term any() {
-    return ANY_TERM;
   }
 
   public static Term prefixedName(String prefix, String localName) {

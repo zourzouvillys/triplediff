@@ -8,7 +8,7 @@ import static zrz.triplediff.DeltaTerms.prefixedName;
 
 import org.junit.Test;
 
-import zrz.triplediff.protobuf.TripleDiffProto.Delta;
+import triplediff.protobuf.TripleDiffProto.Delta;
 
 public class DeltaProcessorTest {
 

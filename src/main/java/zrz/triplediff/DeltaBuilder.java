@@ -1,22 +1,19 @@
 package zrz.triplediff;
 
 import java.util.HashMap;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
 
-import zrz.triplediff.protobuf.TripleDiffProto.Delta;
-import zrz.triplediff.protobuf.TripleDiffProto.Delta.Builder;
-import zrz.triplediff.protobuf.TripleDiffProto.Diff;
-import zrz.triplediff.protobuf.TripleDiffProto.Diff.ValueCase;
-import zrz.triplediff.protobuf.TripleDiffProto.PrefixDecl;
-import zrz.triplediff.protobuf.TripleDiffProto.Row;
-import zrz.triplediff.protobuf.TripleDiffProto.SubjectList;
-import zrz.triplediff.protobuf.TripleDiffProto.Term;
-import zrz.triplediff.protobuf.TripleDiffProto.Triple;
-import zrz.triplediff.protobuf.TripleDiffProto.TupleList;
+import triplediff.protobuf.TripleDiffProto.Delta;
+import triplediff.protobuf.TripleDiffProto.Diff;
+import triplediff.protobuf.TripleDiffProto.Diff.ValueCase;
+import triplediff.protobuf.TripleDiffProto.PrefixDecl;
+import triplediff.protobuf.TripleDiffProto.Row;
+import triplediff.protobuf.TripleDiffProto.SubjectList;
+import triplediff.protobuf.TripleDiffProto.Term;
+import triplediff.protobuf.TripleDiffProto.Triple;
+import triplediff.protobuf.TripleDiffProto.TupleList;
 
 /**
  * builds a diff proto which is as small as possible given the changes.
