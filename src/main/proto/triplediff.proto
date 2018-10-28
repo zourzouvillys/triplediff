@@ -2,7 +2,7 @@ syntax = "proto3";
 
 import "google/protobuf/wrappers.proto";
  
-package triplediff.protobuf;
+package triplediff.v1;
 
 option optimize_for = SPEED;
 option java_package = "triplediff.protobuf";
