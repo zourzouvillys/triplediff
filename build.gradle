@@ -4,15 +4,17 @@ plugins {
   id "com.google.protobuf" version "0.8.6"
   id "maven"
   id "eclipse"
+  id 'maven-publish'
 }
 
 description = 'Triple Diff Streams'
-version = 'master-SNAPSHOT'
+version = "${version}" != "unspecified"
+  ? "${version}"
+  : 'master-SNAPSHOT';
 group = 'com.github.zourzouvillys'
 
 sourceCompatibility = 8
 targetCompatibility = 8
-
 
 repositories {
   mavenCentral()
@@ -101,6 +103,22 @@ install {
           distribution 'repo'
         }
       }
+    }
+  }
+}
+
+publishing {
+  publications {
+    "$project.name"(MavenPublication) {
+      groupId project.group
+      version project.version
+      from components.java
+      artifact sourcesJar
+    }
+  }
+  repositories {
+    maven {
+      url = "$buildDir/repo"
     }
   }
 }
