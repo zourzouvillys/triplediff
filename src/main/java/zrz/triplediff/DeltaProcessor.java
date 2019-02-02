@@ -64,7 +64,7 @@ public class DeltaProcessor {
         stream.add(t.getSubject(), t.getPredicate(), t.getObject());
         break;
       }
-      case SUBJECTLIST: {
+      case SUBJECT_LIST: {
         SubjectList sl = add.getSubjectList();
         for (TupleList vl : sl.getValuesList()) {
           vl.getObjectsList().forEach(object -> stream.add(sl.getSubject(), vl.getPredicate(), object));
@@ -87,7 +87,7 @@ public class DeltaProcessor {
         stream.remove(t.getSubject(), t.getPredicate(), t.getObject());
         break;
       }
-      case SUBJECTLIST: {
+      case SUBJECT_LIST: {
         SubjectList sl = delete.getSubjectList();
         for (TupleList vl : sl.getValuesList()) {
           vl.getObjectsList().forEach(object -> stream.remove(sl.getSubject(), vl.getPredicate(), object));

@@ -77,7 +77,7 @@ message Row {
     // allows smaller streams when lots of IRIs included.
     PrefixDecl prefix = 1;
     Triple triple = 2;
-    SubjectList subjectList = 3;
+    SubjectList subject_list = 3;
   }
 }
 
